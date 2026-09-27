@@ -4,6 +4,7 @@ import { webdecoy } from '@webdecoy/hono';
 import { readFile } from 'node:fs/promises';
 
 const app = new Hono();
+const onRender = Boolean(process.env.RENDER);
 const port = Number(process.env.PORT) || 3000;
 
 const apiKey = process.env.WEBDECOY_API_KEY;
@@ -11,7 +12,7 @@ if (!apiKey) {
   console.warn('WEBDECOY_API_KEY is not set: running local rules only, nothing reports to WebDecoy.');
 }
 
-// Railway's healthcheck. Registered before the middleware so it is never analyzed.
+// The platform healthcheck. Registered before the middleware so it is never analyzed.
 app.get('/health', (c) => c.json({ status: 'ok' }));
 
 // Monitor mode (the default) records detections and still serves every request.
@@ -21,9 +22,10 @@ app.use(
   webdecoy({
     apiKey,
     // Railway rewrites X-Forwarded-For to exactly "<client>, <edge>" (anything
-    // the client sent is dropped). Trusting two hops reports the real visitor
-    // rather than Railway's edge.
-    trustProxy: 2,
+    // the client sent is dropped). Render appends to whatever the client sent
+    // and sits behind Cloudflare, which sets CF-Connecting-IP and refuses a
+    // request that tries to supply its own.
+    trustProxy: onRender ? 'cloudflare' : 'railway',
     skipPaths: ['/health'],
   }),
 );
@@ -34,7 +36,7 @@ app.get('/', (c) => c.html(indexHtml));
 app.get('/api/hello', (c) => {
   const decision = c.get('webdecoy');
   return c.json({
-    message: 'Hello from Railway',
+    message: `Hello from ${onRender ? 'Render' : 'Railway'}`,
     webdecoy: decision
       ? {
           conclusion: decision.conclusion,

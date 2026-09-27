@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hono on Railway with WebDecoy</title>
+    <title>Hono with WebDecoy</title>
     <style>
       body { font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 4rem auto; padding: 0 1rem; }
       code { background: #f2f2f2; padding: 0.1rem 0.3rem; border-radius: 0.2rem; }
@@ -11,9 +11,9 @@
   </head>
   <body>
     <h1>It's running.</h1>
-    <p>This Hono app is on Railway with WebDecoy bot detection in front of every route.</p>
+    <p>This Hono app is with WebDecoy bot detection in front of every route.</p>
     <p>Prove it reports: request any page with the test user agent, then open Detections in WebDecoy.</p>
-    <pre><code>curl -A "WebDecoy-Test/1.0" https://&lt;your-app&gt;.up.railway.app/</code></pre>
+    <pre><code>curl -A "WebDecoy-Test/1.0" https://YOUR-APP-DOMAIN/</code></pre>
     <p>Replace this page with your app. <code>/api/hello</code> shows what the middleware decided for a request.</p>
   </body>
 </html>

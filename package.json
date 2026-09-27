@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.19.0",
-    "@webdecoy/hono": "^0.17.0",
+    "@webdecoy/hono": "^0.18.0",
     "hono": "^4.9.0"
   },
   "license": "MIT"
