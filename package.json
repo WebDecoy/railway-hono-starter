@@ -1,0 +1,21 @@
+{
+  "name": "webdecoy-railway-hono-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hono on Railway with WebDecoy bot detection wired in.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.0",
+    "@webdecoy/hono": "^0.17.0",
+    "hono": "^4.9.0"
+  },
+  "license": "MIT"
+}
